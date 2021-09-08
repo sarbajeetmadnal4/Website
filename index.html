@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My first website!</title>
+</head>
+<body>
+ <!---navbar--->   
+<nav class="navbar navbar-expand-md navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+		<strong><em>Savoy Restaurent bar and grill</em></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navi">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navi">
+                <ul class="navbar-nav mr-auto">
+                    
+                    
+                    <?php
+                    //set navigation bar when logged in
+                    if(isset($_SESSION['user_id'])){ echo'
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservation.php" >New Reservation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view_reservations.php" >View Reservations</a>
+                    </li>';
+                    
+                    //set navigation bar when logged in and role of admin
+                    if($_SESSION['role']==2) {   
+                    echo'
+                    <li class="nav-item">
+                        <a class="nav-link" href="schedule.php" >Edit Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tables.php" >Edit Tables</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view_tables.php" >View Tables</a>
+                    </li>';    
+                    }
+                    }
+                    //main page not logged in navigation bar
+                    else { echo'
+                    <li class="nav-item">
+	                 <a class="nav-link" href="#aboutus">About Us</a>
+	             </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#gallery">Gallery</a>
+	            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#reservation">Reservation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer">Find Us</a>
+                    </li>
+                    '; } 
+                    ?>
+                    
+                </ul>
+                
+                    <?php
+                    //log out button when user is logged in
+                    if(isset($_SESSION['user_id'])){
+                    echo '
+                    <form class="navbar-form navbar-right" action="includes/logout.inc.php" method="post">
+                    <button type="submit" name="logout-submit" class="btn btn-outline-dark">Logout</button>
+                    </form>';
+                    }
+                    else{  
+                    echo '
+                    <div>
+                    <ul class="navbar-nav ml-auto">
+			<li><a class="nav-link fa fa-sign-in" data-toggle="modal" data-target="#myModal_reg">&nbsp;Sing Up</a></li>
+			<li><a class="nav-link fa fa-user-plus" data-toggle="modal" data-target="#myModal_login">&nbsp;Login</a></li>
+                    </ul> 
+                    </div>
+                    ';} 
+                    ?>
+              
+            </div>
+        </div>
+</nav>
+
+<div class="container">
+  <!-- The Modal -->                          
+    <div class="modal fade" id="myModal_login">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Login</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+            
+            <?php
+            if(isset($_GET['error1'])){
+        
+            //script for modal to appear when error 
+            echo '  <script>
+                    $(document).ready(function(){
+                    $("#myModal_login").modal("show");
+                    });
+                    </script> ';
+        
+        
+            //error handling of log in
+        
+            if($_GET['error1'] == "emptyfields") {   
+            echo '<h5 class="text-danger text-center">Fill all fields, Please try again!</h5>';
+            }
+            else if($_GET['error1'] == "error") {   
+            echo '<h5 class="text-danger text-center">Error Occured, Please try again!</h5>';
+            }
+            else if($_GET['error1'] == "wrongpwd") {   
+                echo '<h5 class="text-danger text-center">Wrong Password, Please try again!</h5>';
+            }
+            else if($_GET['error1'] == "error2") {   
+                echo '<h5 class="text-danger text-center">Error Occured, Please try again!</h5>';
+            }
+            else if($_GET['error1'] == "nouser") {   
+                echo '<h5 class="text-danger text-center">Username or email not found, Please try again!</h5>';
+                }
+            }
+            echo'<br>';
+            ?>  
+            
+                    <div class="signin-form">
+                    <form action="includes/login.inc.php" method="post">
+                        <p class="hint-text">If you have already an account please log in.</p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="mailuid" placeholder="Username Or Email" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="pwd" placeholder="Password" required="required">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="login-submit" class="btn btn-dark btn-lg btn-block">Log In</button>
+                    </div>
+                            </form>
+                    </div>   
+                </div>
+	<a href="newpage.html">New Page</a><br>
+	<a href="register.html">Register</a>
+	<ul>
+		<li>banana</li>
+		<li>apple</li>
+		<ul>
+			<li>fuji</li>
+			<img src="http://www.drysparkling.com/wp-content/uploads/2015/04/DRY_Apple_whole-1.jpg" width="42" height="42">
+			<li>honeycrisp</li>
+			<img src="http://www.apples.me/assets/images/honeycrisp.jpg" width="42" height="42">
+		</ul>
+		<li>orange</li>
+	</ul>
+</body>
+</html>
